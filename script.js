@@ -15,9 +15,9 @@ const personalMovieDB = {
 let loveFilm = mostLoveFilm();
 
 rememberMyFilms();
+writeYourGenres();
+showMyDB();
 
-console.log(personalMovieDB);
-console.log(loveFilm);
 
 function mostLoveFilm() {
     let str = "";
@@ -61,4 +61,20 @@ function detectPersonalLevel() {
     } else {
         console.log("error");
     }
+}
+
+function showMyDB(){
+    if (personalMovieDB.privat == false){
+        console.log(personalMovieDB);
+    }
+}
+
+function writeYourGenres(){
+    for (let i = 1; i <= 3; i++) {
+        let a = prompt(`Ваш любимый жанр под номером ${i}`, "");
+        while (a == "" || a == null || a.length > 50) {
+            a = prompt(`Ваш любимый жанр под номером ${i}`, "");
+        }
+        personalMovieDB.genres.push(a);
+    }      
 }
