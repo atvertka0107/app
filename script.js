@@ -1,17 +1,8 @@
 "use strict";
-function getAnswer(str2) {
-    let temp = '';
-    while (temp == "" || temp == null) {
-        temp = prompt(str2, "");
-    }
-    if (temp.length > 50) {
-        getAnswer(str2);
-    }
-    return temp;
-}
 
-const numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", "");
-let mostLoveFilm = getAnswer("Название любимого фильма?");
+let numberOfFilms;
+
+start();
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -21,22 +12,53 @@ const personalMovieDB = {
     privat: false
 };
 
-if (personalMovieDB.count < 10 && personalMovieDB.count > 0) {
-    console.log("Просмотрено довольно мало фильмов");
-} else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-    console.log("Вы классический зритель");
-} else if (personalMovieDB.count > 30) {
-    console.log("вы киноман");
-} else {
-    console.log("error");
-}
+let loveFilm = mostLoveFilm();
 
-for (let i = 0; i < 2; i++) {
-    let a = getAnswer("Один из последних просмотренных фильмов"),
-        b = +prompt("оцените от 0 до 10", "");
-    personalMovieDB.movies[a] = b;
-}
+rememberMyFilms();
 
 console.log(personalMovieDB);
+console.log(loveFilm);
 
-alert(`me too, like ${mostLoveFilm}`);
+function mostLoveFilm() {
+    let str = "";
+    while (str == "" || str == null || str.length > 50) {
+        str = prompt("Название любимого фильма...", "");
+    }
+    return str;
+}
+
+function start() {
+    numberOfFilms = +prompt("Сколько фильмов вы уже успели посмотреть?", "");
+
+    while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt("Сколько фильмов вы уже успели посмотреть?", "");
+    }
+}
+
+function rememberMyFilms() {
+    for (let i = 0; i < 2; i++) {
+        let a = prompt("Введите последний просмотренный фильм", "");
+        while (a == "" || a == null || a.length > 50) {
+            alert("Вы обязаны ввести название фильма");
+            a = prompt("Введите название фильма", "");
+        }
+        let b = +prompt("Оцените фильм от 0 до 10", "");
+        while (b == "" || b == null || isNaN(b) || b < 0 || b > 10) {
+            alert("Введите число");
+            b = +prompt("Оцените фильм от 0 до 10", "");
+        }
+        personalMovieDB.movies[a] = b;
+    }
+}
+
+function detectPersonalLevel() {
+    if (personalMovieDB.count < 10 && personalMovieDB.count > 0) {
+        console.log("Просмотрено довольно мало фильмов");
+    } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+        console.log("Вы классический зритель");
+    } else if (personalMovieDB.count > 30) {
+        console.log("вы киноман");
+    } else {
+        console.log("error");
+    }
+}
