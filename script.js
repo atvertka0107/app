@@ -44,7 +44,7 @@ function rememberMyFilms() {
         }
         let b = +prompt("Оцените фильм от 0 до 10", "");
         while (b == "" || b == null || isNaN(b) || b < 0 || b > 10) {
-            alert("Введите число");
+            alert("Ошибка, введите число от 0 до 10 включительно");
             b = +prompt("Оцените фильм от 0 до 10", "");
         }
         personalMovieDB.movies[a] = b;
@@ -64,7 +64,7 @@ function detectPersonalLevel() {
 }
 
 function showMyDB(){
-    if (personalMovieDB.privat == false){
+    if (!personalMovieDB.privat){
         console.log(personalMovieDB);
     }
 }
